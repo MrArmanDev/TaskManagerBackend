@@ -6,6 +6,9 @@ This backend provides authentication, JWT-based authorization, task management (
 
 ---
 
+# API testing 
+.http file and logs files ----> api (folder) please check
+
 ## 🛠 Tech Stack
 
 - 🦀 Rust
