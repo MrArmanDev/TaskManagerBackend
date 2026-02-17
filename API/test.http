@@ -1,0 +1,67 @@
+@URL = http://127.0.0.1:8000
+@email = test22@gmail.com
+@username = test22
+
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjkwLCJlbWFpbCI6InRlc3QyMkBnbWFpbC5jb20iLCJleHAiOjE3NzE0MzA1Mjh9.nGZZqLGmXdjeCQzJgcUvWZH5RU4vy04SOtor2Ubyv6Q
+### Health check
+GET {{URL}}/health
+
+### Register
+POST {{URL}}/auth/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "{{username}}",
+    "email": "{{email}}",
+    "password": "password_123"
+}
+
+### Login
+POST {{URL}}/auth/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "{{email}}",
+    "password": "password_123"
+}
+
+
+### Create Task
+POST {{URL}}/task/api/auth/create
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "test 22",
+    "description": "session 22",
+    "status": "Pending"
+}
+
+
+
+### Task Update Request
+PUT {{URL}}/task/api/auth/update
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "id": 6,
+    "title": "Rust Task Updated",
+    "description": "I have successfully updated this task using HTTP client",
+    "status": "Completed"
+}
+
+
+### 1. Get All Tasks 
+GET {{URL}}/task/api/auth/get
+Authorization: Bearer {{authToken}}
+Accept: application/json
+
+### Delete Task
+DELETE {{URL}}/task/api/auth/delete
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "id": 8
+}
