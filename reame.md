@@ -92,7 +92,7 @@ POST /auth/api/auth/register
   "password": "password_123"
 }
 
-
+# Login
 POST /auth/api/auth/login
 {
   "email": "test@gmail.com",
