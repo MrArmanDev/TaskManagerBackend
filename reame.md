@@ -1,31 +1,46 @@
 # 🚀 Task Manager Backend (Rust + Axum)
 
-A secure and production-ready Task Management Backend built with **Rust**, **Axum**, and **PostgreSQL**.
+A secure, scalable, and production-ready Task Management Backend built using **Rust**, **Axum**, and **PostgreSQL**.
+
+This backend provides authentication, JWT-based authorization, task management (CRUD), and built-in security mechanisms like account lockout protection and scheduled login reset.
+
+---
 
 ## 🛠 Tech Stack
 
 - 🦀 Rust
 - ⚡ Axum (Web Framework)
 - 🐘 PostgreSQL
-- 🗄 SQLx (Async DB Driver)
-- 🔐 JWT (jsonwebtoken)
+- 🗄 SQLx (Async Database Driver)
+- 🔐 jsonwebtoken (JWT Authentication)
 - 🔒 Argon2 (Password Hashing)
 - 🧵 Tokio (Async Runtime)
-- 🛡 Tower HTTP (CORS & Tracing)
+- 🛡 tower-http (CORS & Tracing)
 
 ---
-
 
 ## ✨ Features
 
 - ✅ User Registration & Login
-- 🔐 JWT Authentication
-- 🔒 Secure password hashing (Argon2)
-- 📋 Task CRUD operations
+- 🔐 JWT Authentication (24-hour expiry)
+- 🔒 Secure password hashing using Argon2
+- 📋 Full Task CRUD operations
 - 🛡 Account lock after 3 failed login attempts
-- ⏳ Auto reset login attempts every 30 minutes
+- ⏳ Automatic reset of login attempts every 30 minutes
 - 🌐 CORS enabled
-- 📜 Structured error handling
+- 📜 Centralized structured error handling
+- 🏗 Clean layered architecture
+
+---
+
+## 🧠 Architecture
+
+
+- **Router** → Defines API routes
+- **Handler** → Extracts request data
+- **Service** → Business logic
+- **Repository** → Database queries
+- **Database** → PostgreSQL
 
 ---
 
@@ -46,43 +61,42 @@ src/
 └── utils/
 
 
-Architecture follows:
-
-Router → Handler → Service → Repository → Database
+---
 
 ## ⚙️ Environment Variables
 
-Create a `.env` file in the root:
+Create a `.env` file in the root directory:
 
+```env
 DATABASE_URL=postgres://username:password@localhost:5432/taskdb
 SECRET_KEY=your_super_secret_key
 PORT=8000
 
-
----
-
-## 🗄 Database Setup
+🗄 Database Setup
 
 Make sure PostgreSQL is running.
 
-Run migrations: sqlx migrate run
+1️⃣ Create Database
+CREATE DATABASE taskdb;
+
+2️⃣ Run Migrations
+sqlx migrate run
 
 
-Tables created:
+This will create:
+users table
+tasks table
 
-- users
-- tasks
-- custom ENUM types (user_role, task_status)
+ENUM types:
+user_role
+task_status
 
----
 
-## 🚀 Run the Project
-
-```bash
+🚀 Running the Project
 cargo run
 
+Server will start at:
 http://127.0.0.1:8000
-
 
 # Register
 POST /auth/api/auth/register
@@ -99,7 +113,7 @@ POST /auth/api/auth/login
   "password": "password_123"
 }
 
-# Returns
+# Response
 {
   "token": "JWT_TOKEN",
   "user": {
@@ -109,9 +123,13 @@ POST /auth/api/auth/login
   }
 }
 
+📋 Task APIs (Protected Routes)
+
+All task routes require:
+
 Authorization: Bearer <JWT_TOKEN>
 
-Create Task
+# Create Task
 POST /task/api/auth/create
 
 {
@@ -120,11 +138,10 @@ POST /task/api/auth/create
   "status": "Pending"
 }
 
-Get All Tasks
+# Get All Tasks
 GET /task/api/auth/get
 
-
-Update Task
+# Update Task
 PUT /task/api/auth/update
 
 {
@@ -134,8 +151,7 @@ PUT /task/api/auth/update
   "status": "Completed"
 }
 
-
-Delete Task
+# Delete Task
 DELETE /task/api/auth/delete
 
 {
@@ -157,3 +173,23 @@ Proper HTTP status codes
 Centralized error handling
 
 
+🧪 Testing
+
+You can test using:
+Postman
+VS Code REST Client
+curl
+
+📈 Future Improvements
+
+Role-based authorization
+
+Refresh token support
+
+Rate limiting
+
+Docker support
+
+CI/CD integration
+
+Swagger / OpenAPI documentation
